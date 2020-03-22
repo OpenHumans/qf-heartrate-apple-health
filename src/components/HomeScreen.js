@@ -1,15 +1,21 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, Text} from 'react-native';
 import AuthenticationComponent from './AuthenticationComponent';
 import {connect} from 'react-redux';
 import HealthKitComponent from './HealthKitComponent';
+import {uploadData} from '../services/OpenHumansService';
+
+const RNFS = require('react-native-fs');
 
 const HomeScreen = ({access_token}) => {
-
+  const readFile = () => {
+    var path = RNFS.DocumentDirectoryPath + '/heartrate_samples.txt';
+    RNFS.readFile(path, 'utf8').then(data => {
+      console.log('data', data);
+      uploadData(access_token);
+    });
+  };
 
   return (
     <>
@@ -22,22 +28,13 @@ const HomeScreen = ({access_token}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            {access_token && (
-              <HealthKitComponent/>
-            )}
+            <TouchableOpacity onPress={readFile}>
+              <Text>Read</Text>
+            </TouchableOpacity>
+            {access_token && <HealthKitComponent />}
 
             {!access_token && <AuthenticationComponent />}
           </View>
-          {/*<View style={{flex: 4}}>*/}
-          {/*  {heartData.map(item => {*/}
-          {/*    return (*/}
-          {/*      <Text>*/}
-          {/*        {item.value}bpm recorded @*/}
-          {/*        {moment(item.startDate).format('DD-mm-YYYY')}*/}
-          {/*      </Text>*/}
-          {/*    );*/}
-          {/*  })}*/}
-          {/*</View>*/}
         </View>
       </SafeAreaView>
     </>

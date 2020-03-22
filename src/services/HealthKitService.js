@@ -1,4 +1,5 @@
 import AppleHealthKit from 'rn-apple-healthkit';
+const RNFS = require('react-native-fs');
 
 const PERMS = AppleHealthKit.Constants.Permissions;
 const healtKitInitOptions = {
@@ -42,6 +43,19 @@ const getHeartRateSamples = () => {
           startDate,
         };
       });
+
+      // WRITE THE FILE
+      var path = RNFS.DocumentDirectoryPath + '/heartrate_samples.txt';
+
+      // write the file
+      RNFS.writeFile(path, JSON.stringify(hd), 'utf8')
+        .then(success => {
+          console.log('FILE WRITTEN!');
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+
       resolve(hd);
     });
   });
