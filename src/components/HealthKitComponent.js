@@ -5,52 +5,52 @@ import {
   InitHealthKit,
   GetHeartRateInfo,
 } from '../redux/actions/HealthKitActions';
+import {uploadData} from '../services/OpenHumansService';
+const RNFS = require('react-native-fs');
 
 const HealthKitComponent = ({
   initialized,
   heartRateSamples,
   InitHealthKit,
   GetHeartRateInfo,
+  access_token,
 }) => {
-  const [chosenDate, setChosenDate] = useState(new Date());
-
   useEffect(() => {
     if (!initialized) {
       InitHealthKit();
     }
   }, [initialized]);
 
+  useEffect(() => {
+    if (heartRateSamples) {
+      uploadData(access_token, heartRateSamples);
+    }
+  }, [heartRateSamples]);
+
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 2}}>
-        <DatePickerIOS
-          date={chosenDate}
-          onDateChange={setChosenDate}
-          style={{flex: 1, height: 50}}
-        />
-      </View>
-      <View style={{flex: 1}}>
-        <TouchableOpacity
-          onPress={GetHeartRateInfo}
-          style={{
-            height: 50,
-            flex: 0.7,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 25,
-            backgroundColor: '#798ced',
-          }}>
-          <Text style={{color: '#FFF'}}>Get heart rate samples</Text>
-        </TouchableOpacity>
-        <Text>tet{JSON.stringify(heartRateSamples)}</Text>
-      </View>
-    </View>
+    <>
+      <TouchableOpacity
+        onPress={GetHeartRateInfo}
+        style={{
+          height: 296,
+          width: 296,
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 148,
+          backgroundColor: '#212D58',
+        }}>
+        <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
+          UPLOAD DATA
+        </Text>
+      </TouchableOpacity>
+    </>
   );
 };
 
 const mapStateToProps = state => {
   const {initialized, heartRateSamples} = state.HealthKitReducer;
-  return {initialized, heartRateSamples};
+  const {access_token} = state.AuthenticationReducer;
+  return {initialized, heartRateSamples, access_token};
 };
 
 export default connect(

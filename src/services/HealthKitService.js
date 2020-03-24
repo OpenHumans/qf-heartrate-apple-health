@@ -44,18 +44,6 @@ const getHeartRateSamples = () => {
         };
       });
 
-      // WRITE THE FILE
-      var path = RNFS.DocumentDirectoryPath + '/heartrate_samples.txt';
-
-      // write the file
-      RNFS.writeFile(path, JSON.stringify(hd), 'utf8')
-        .then(success => {
-          console.log('FILE WRITTEN!');
-        })
-        .catch(err => {
-          console.log(err.message);
-        });
-
       resolve(hd);
     });
   });

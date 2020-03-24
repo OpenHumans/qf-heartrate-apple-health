@@ -30,14 +30,16 @@ const AuthenticationComponent = ({retrieveOAuthTokenAction, access_token}) => {
         <TouchableOpacity
           onPress={triggerOAuthFlow}
           style={{
-            height: 50,
-            flex: 0.7,
+            height: 296,
+            width: 296,
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 25,
-            backgroundColor: '#798ced',
+            borderRadius: 148,
+            backgroundColor: '#3BB155',
           }}>
-          <Text style={{color: '#FFF'}}>Authenticate</Text>
+          <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
+            LOGIN
+          </Text>
         </TouchableOpacity>
       )}
     </>
