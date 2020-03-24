@@ -10,6 +10,16 @@ const HealthKitReducer = (state = {}, action) => {
         ...state,
         heartRateSamples: action.payload,
       };
+    case 'HEART_RATE_SAMPLES_UPLOAD_SUCCESS':
+      return {
+        ...state,
+        uploaded: true,
+      };
+    case 'HEALTH_KIT_ERROR':
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }

@@ -1,5 +1,4 @@
 import AppleHealthKit from 'rn-apple-healthkit';
-const RNFS = require('react-native-fs');
 
 const PERMS = AppleHealthKit.Constants.Permissions;
 const healtKitInitOptions = {
@@ -9,7 +8,7 @@ const healtKitInitOptions = {
 };
 
 const initHealthKit = () => {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     AppleHealthKit.initHealthKit(healtKitInitOptions, (err, results) => {
       if (err) {
         reject(err);
@@ -18,8 +17,6 @@ const initHealthKit = () => {
       resolve();
     });
   });
-
-  return promise;
 };
 
 const getHeartRateSamples = () => {
@@ -30,7 +27,7 @@ const getHeartRateSamples = () => {
     ascending: false, // optional; default false
     limit: 10, // optional; default no limit
   };
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     AppleHealthKit.getHeartRateSamples(options, (err, results) => {
       if (err) {
         reject(err);
@@ -47,8 +44,6 @@ const getHeartRateSamples = () => {
       resolve(hd);
     });
   });
-
-  return promise;
 };
 
 export {initHealthKit, getHeartRateSamples};

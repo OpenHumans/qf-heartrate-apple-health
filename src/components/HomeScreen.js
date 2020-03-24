@@ -5,11 +5,11 @@ import AuthenticationComponent from './AuthenticationComponent';
 import {connect} from 'react-redux';
 import HealthKitComponent from './HealthKitComponent';
 
-const HomeScreen = ({access_token}) => {
+const HomeScreen = ({access_token, navigation}) => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#5D71BA'}}>
-        <View style={{flex: 1}}>
+        <View style={{flex: 9}}>
           <View
             style={{
               flex: 1,
@@ -21,6 +21,14 @@ const HomeScreen = ({access_token}) => {
 
             {!access_token && <AuthenticationComponent />}
           </View>
+        </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('PrivacyPolicy');
+            }}>
+            <Text style={{color: '#FFF'}}>Privacy policy</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </>

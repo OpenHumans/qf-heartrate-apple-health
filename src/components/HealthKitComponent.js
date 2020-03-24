@@ -10,7 +10,8 @@ const RNFS = require('react-native-fs');
 
 const HealthKitComponent = ({
   initialized,
-  heartRateSamples,
+  uploaded,
+  acces_token,
   InitHealthKit,
   GetHeartRateInfo,
   access_token,
@@ -21,36 +22,39 @@ const HealthKitComponent = ({
     }
   }, [initialized]);
 
-  useEffect(() => {
-    if (heartRateSamples) {
-      uploadData(access_token, heartRateSamples);
-    }
-  }, [heartRateSamples]);
-
   return (
     <>
-      <TouchableOpacity
-        onPress={GetHeartRateInfo}
-        style={{
-          height: 296,
-          width: 296,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 148,
-          backgroundColor: '#212D58',
-        }}>
+      {uploaded && (
         <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
-          UPLOAD DATA
+          DATA UPLOAD SUCCESS
         </Text>
-      </TouchableOpacity>
+      )}
+      {initialized && !uploaded && (
+        <TouchableOpacity
+          onPress={() => {
+            GetHeartRateInfo(access_token);
+          }}
+          style={{
+            height: 296,
+            width: 296,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 148,
+            backgroundColor: '#212D58',
+          }}>
+          <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
+            UPLOAD DATA
+          </Text>
+        </TouchableOpacity>
+      )}
     </>
   );
 };
 
 const mapStateToProps = state => {
-  const {initialized, heartRateSamples} = state.HealthKitReducer;
+  const {initialized, heartRateSamples, uploaded} = state.HealthKitReducer;
   const {access_token} = state.AuthenticationReducer;
-  return {initialized, heartRateSamples, access_token};
+  return {initialized, heartRateSamples, access_token, uploaded};
 };
 
 export default connect(
