@@ -1,10 +1,29 @@
 import React, {useEffect} from 'react';
 import {TouchableOpacity, Text, Linking} from 'react-native';
-import {OAUTH_URL} from '../common/config';
-import {retrieveOAuthToken} from '../redux/actions/AuthenticationActions';
+import {I18N, OAUTH_URL} from '../common/config';
+import {
+  refreshTokenAction,
+  retrieveOAuthToken,
+} from '../redux/actions/AuthenticationActions';
 import {connect} from 'react-redux';
 
-const AuthenticationComponent = ({retrieveOAuthTokenAction, access_token}) => {
+const AuthenticationComponent = ({
+  retrieveOAuthTokenAction,
+  refreshTokenActionDispatcher,
+  access_token,
+  refresh_token,
+  expires_in,
+  login_date,
+}) => {
+  useEffect(() => {
+    const now = new Date();
+    const isValid = new Date(login_date + expires_in).getTime() > now.getTime();
+    if (refresh_token && !isValid) {
+      console.log('refresh');
+      refreshTokenActionDispatcher(refresh_token);
+    }
+  }, [refresh_token]);
+
   const _handleOpenURL = event => {
     retrieveOAuthTokenAction(event.url);
   };
@@ -38,7 +57,7 @@ const AuthenticationComponent = ({retrieveOAuthTokenAction, access_token}) => {
             backgroundColor: '#3BB155',
           }}>
           <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
-            LOGIN
+            {I18N.LOGIN}
           </Text>
         </TouchableOpacity>
       )}
@@ -47,11 +66,19 @@ const AuthenticationComponent = ({retrieveOAuthTokenAction, access_token}) => {
 };
 
 const mapStateToProps = state => {
-  const {access_token} = state.AuthenticationReducer;
-  return {access_token};
+  const {
+    access_token,
+    refresh_token,
+    expires_in,
+    login_date,
+  } = state.AuthenticationReducer;
+  return {access_token, refresh_token, expires_in, login_date};
 };
 
 export default connect(
   mapStateToProps,
-  {retrieveOAuthTokenAction: retrieveOAuthToken},
+  {
+    retrieveOAuthTokenAction: retrieveOAuthToken,
+    refreshTokenActionDispatcher: refreshTokenAction,
+  },
 )(AuthenticationComponent);

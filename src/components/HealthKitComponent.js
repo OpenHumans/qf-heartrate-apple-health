@@ -6,6 +6,7 @@ import {
   GetHeartRateInfo,
   resetHealthKitUploader,
 } from '../redux/actions/HealthKitActions';
+import {I18N} from '../common/config';
 
 const HealthKitComponent = ({
   initialized,
@@ -36,7 +37,7 @@ const HealthKitComponent = ({
       {!loading && uploaded && (
         <View style={{flexDirection: 'column', alignItems: 'center'}}>
           <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
-            DATA UPLOAD SUCCESS
+            {I18N.UPLOAD_SUCCESS}
           </Text>
           <TouchableOpacity
             onPress={resetHealthKitUploaderAction}
@@ -47,7 +48,7 @@ const HealthKitComponent = ({
               padding: 10,
             }}>
             <Text style={{fontSize: 14, color: '#fff'}}>
-              Upload another one
+              {I18N.UPLOAD_ANOTHER}
             </Text>
           </TouchableOpacity>
         </View>
@@ -66,7 +67,7 @@ const HealthKitComponent = ({
             backgroundColor: '#212D58',
           }}>
           <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
-            UPLOAD DATA
+            {I18N.UPLOAD_DATA}
           </Text>
         </TouchableOpacity>
       )}

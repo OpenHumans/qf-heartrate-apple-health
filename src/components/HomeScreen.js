@@ -22,7 +22,7 @@ const HomeScreen = ({access_token, navigation}) => {
             }}>
             {access_token && <HealthKitComponent />}
 
-            {!access_token && <AuthenticationComponent />}
+            <AuthenticationComponent />
           </View>
         </View>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
