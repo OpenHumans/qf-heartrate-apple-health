@@ -16,14 +16,14 @@ import {PersistGate} from 'redux-persist/integration/react';
 import configureStore from './src/redux/store';
 import PrivacyInformationComponent from './src/components/PrivacyInformationComponent';
 
-import {decode, encode} from 'base-64'
+import {decode, encode} from 'base-64';
 
 if (!global.btoa) {
-    global.btoa = encode;
+  global.btoa = encode;
 }
 
 if (!global.atob) {
-    global.atob = decode;
+  global.atob = decode;
 }
 
 const {persistor, store} = configureStore();

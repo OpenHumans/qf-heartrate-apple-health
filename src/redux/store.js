@@ -6,9 +6,12 @@ import HealthKitReducer from './reducers/HealtKitReducer';
 
 import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
+import ErrorReducer from './reducers/ErrorReducer';
+import LoaderReducer from './reducers/LoaderReducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['AuthenticationReducer'],
 };
 
 const persistedReducer = persistReducer(
@@ -16,6 +19,8 @@ const persistedReducer = persistReducer(
   combineReducers({
     AuthenticationReducer,
     HealthKitReducer,
+    ErrorReducer,
+    LoaderReducer,
   }),
 );
 

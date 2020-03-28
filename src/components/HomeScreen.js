@@ -4,11 +4,14 @@ import {SafeAreaView, View, TouchableOpacity, Text} from 'react-native';
 import AuthenticationComponent from './AuthenticationComponent';
 import {connect} from 'react-redux';
 import HealthKitComponent from './HealthKitComponent';
+import {refreshTokenAction} from '../redux/actions/AuthenticationActions';
+import ErrorComponent from './ErrorComponent';
 
 const HomeScreen = ({access_token, navigation}) => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#5D71BA'}}>
+        <ErrorComponent />
         <View style={{flex: 9}}>
           <View
             style={{
@@ -42,5 +45,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  null,
+  {refreshTokenAction},
 )(HomeScreen);

@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, DatePickerIOS} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 import {
   InitHealthKit,
   GetHeartRateInfo,
+  resetHealthKitUploader,
 } from '../redux/actions/HealthKitActions';
-import {uploadData} from '../services/OpenHumansService';
-const RNFS = require('react-native-fs');
 
 const HealthKitComponent = ({
   initialized,
   uploaded,
-  acces_token,
   InitHealthKit,
   GetHeartRateInfo,
   access_token,
+  resetHealthKitUploaderAction,
+  loading,
 }) => {
   useEffect(() => {
     if (!initialized) {
@@ -24,12 +24,35 @@ const HealthKitComponent = ({
 
   return (
     <>
-      {uploaded && (
-        <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
-          DATA UPLOAD SUCCESS
-        </Text>
+      {loading && (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator large />
+        </View>
       )}
-      {initialized && !uploaded && (
+      {!loading && uploaded && (
+        <View style={{flexDirection: 'column', alignItems: 'center'}}>
+          <Text style={{color: '#FFF', fontSize: 48, textAlign: 'center'}}>
+            DATA UPLOAD SUCCESS
+          </Text>
+          <TouchableOpacity
+            onPress={resetHealthKitUploaderAction}
+            style={{
+              borderRadius: 15,
+              margin: 5,
+              backgroundColor: '#3BB155',
+              padding: 10,
+            }}>
+            <Text style={{fontSize: 14, color: '#fff'}}>
+              Upload another one
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      {!loading && initialized && !uploaded && (
         <TouchableOpacity
           onPress={() => {
             GetHeartRateInfo(access_token);
@@ -53,11 +76,16 @@ const HealthKitComponent = ({
 
 const mapStateToProps = state => {
   const {initialized, heartRateSamples, uploaded} = state.HealthKitReducer;
+  const {loading} = state.LoaderReducer;
   const {access_token} = state.AuthenticationReducer;
-  return {initialized, heartRateSamples, access_token, uploaded};
+  return {initialized, heartRateSamples, access_token, uploaded, loading};
 };
 
 export default connect(
   mapStateToProps,
-  {InitHealthKit, GetHeartRateInfo},
+  {
+    InitHealthKit,
+    GetHeartRateInfo,
+    resetHealthKitUploaderAction: resetHealthKitUploader,
+  },
 )(HealthKitComponent);

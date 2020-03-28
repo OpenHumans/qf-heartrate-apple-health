@@ -1,111 +1,96 @@
+import {acc} from 'react-native-reanimated';
+
 const RNFS = require('react-native-fs');
 import axios from 'axios';
-import {OPEN_HUMANS_BASE} from '../common/config';
+import {FILENAME_PREFIX, OPEN_HUMANS_BASE} from '../common/config';
 
-const uploadData = (accessToken, heartData) => {
-  const promise = new Promise((resolve, reject) => {
-    // WRITE THE FILE
-    const filename = `heartrate_samples_${new Date().getTime()}.txt`;
-    const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
+const writeFile = (filePath, jsonToWrite) => {
+  return RNFS.writeFile(filePath, JSON.stringify(jsonToWrite), 'utf8');
+};
 
-    // write the file
-    RNFS.writeFile(filePath, JSON.stringify(heartData), 'utf8')
-      .then(success => {
-        const uploadUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/upload/direct/?access_token=${accessToken}`;
-
-        axios({
-          method: 'post',
-          url: uploadUrl,
-          data: {
-            filename: filename,
-            metadata: JSON.stringify({
-              tags: ['heartrate'],
-              description: 'Heart rate data',
-            }),
-          },
-        })
-          .then(function({data}) {
-            console.log(data);
-            //handle success
-            const files = [
-              {
-                filename: filename,
-                filepath: filePath,
-              },
-            ];
-
-            var uploadBegin = response => {
-              var jobId = response.jobId;
-              console.log('UPLOAD HAS BEGUN! JobId: ' + jobId);
-            };
-
-            var uploadProgress = response => {
-              var percentage = Math.floor(
-                (response.totalBytesSent / response.totalBytesExpectedToSend) *
-                  100,
-              );
-              console.log('UPLOAD IS ' + percentage + '% DONE!');
-            };
-
-            // upload files
-            RNFS.uploadFiles({
-              toUrl: data.url,
-              binaryStreamOnly: true,
-              files: files,
-              headers: {
-                'Content-Type': '',
-              },
-              method: 'PUT',
-              fields: {
-                file_id: data.id,
-              },
-              begin: uploadBegin,
-              progress: uploadProgress,
-            })
-              .promise.then(response => {
-                if (response.statusCode == 200) {
-                  axios({
-                    method: 'post',
-                    url:
-                      OPEN_HUMANS_BASE +
-                      'api/direct-sharing/project/files/upload/complete/?access_token=' +
-                      accessToken,
-                    data: {
-                      file_id: data.id,
-                    },
-                  })
-                    .then(completeRes => {
-                      resolve();
-                    })
-                    .catch(err => {
-                      reject(err);
-                    });
-                } else {
-                  reject('SERVER_ERROR');
-                }
-              })
-              .catch(err => {
-                if (err.description === 'cancelled') {
-                  // cancelled by user
-                  reject('cancelled');
-                }
-                console.log(err);
-                reject(err);
-              });
-          })
-          .catch(response => {
-            //handle error
-            console.log(response);
-            reject(response);
-          });
-      })
-      .catch(err => {
-        console.log(err.message);
-        reject(err.message);
-      });
+const createUploadResource = (accessToken, filename) => {
+  const uploadUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/upload/direct/?access_token=${accessToken}`;
+  return axios({
+    method: 'post',
+    url: uploadUrl,
+    data: {
+      filename: filename,
+      metadata: JSON.stringify({
+        tags: ['heartrate'],
+        description: 'Heart rate data',
+      }),
+    },
   });
+};
 
-  return promise;
+const doMultipartUpload = (files, url, id) => {
+  const uploadBegin = response => {
+    const jobId = response.jobId;
+    console.log('UPLOAD HAS BEGUN! JobId: ' + jobId);
+  };
+
+  const uploadProgress = response => {
+    const percentage = Math.floor(
+      (response.totalBytesSent / response.totalBytesExpectedToSend) * 100,
+    );
+    console.log('UPLOAD IS ' + percentage + '% DONE!');
+  };
+
+  // upload files
+  return RNFS.uploadFiles({
+    toUrl: url,
+    binaryStreamOnly: true,
+    files: files,
+    headers: {
+      'Content-Type': '',
+    },
+    method: 'PUT',
+    fields: {
+      file_id: id,
+    },
+    begin: uploadBegin,
+    progress: uploadProgress,
+  }).promise;
+};
+
+const closeUploadREsource = (accessToken, id) => {
+  return axios({
+    method: 'post',
+    url:
+      OPEN_HUMANS_BASE +
+      'api/direct-sharing/project/files/upload/complete/?access_token=' +
+      accessToken,
+    data: {
+      file_id: id,
+    },
+  });
+};
+
+const uploadData = async (accessToken, heartData) => {
+  return new Promise(async (resolve, reject) => {
+    // WRITE THE FILE
+    const filename = `${FILENAME_PREFIX}${new Date().getTime()}.txt`;
+    const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
+    try {
+      await writeFile(filePath, heartData);
+      const {data} = await createUploadResource(accessToken, filename);
+
+      await doMultipartUpload(
+        [
+          {
+            filename: filename,
+            filepath: filePath,
+          },
+        ],
+        data.url,
+        data.id,
+      );
+      await closeUploadREsource(accessToken, data.id);
+      resolve();
+    } catch ({response}) {
+      reject(response);
+    }
+  });
 };
 
 export {uploadData};

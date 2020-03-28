@@ -1,20 +1,31 @@
-import {handleOAuthRedirector} from '../../services/AuthenticationService';
+import {
+  handleOAuthRedirector,
+  refreshToken,
+} from '../../services/AuthenticationService';
+import {LOGIN_SUCCESS} from './actionTypes';
 
 const retrieveOAuthToken = code => {
   return dispatch => {
-    // dispatch({
-    //   type: 'LOGIN_SUCCESS',
-    //   payload: {access_token: '1w23', refresh_token: '231'},
-    // });
-
     handleOAuthRedirector(code).then(({data}) => {
-      const {access_token, refresh_token} = data;
+      const {access_token, refresh_token, expires_in} = data;
       dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: {access_token, refresh_token},
+        type: LOGIN_SUCCESS,
+        payload: {access_token, refresh_token, expires_in},
       });
     });
   };
 };
 
-export {retrieveOAuthToken};
+const refreshTokenAction = refreshTokenValue => {
+  return dispatch => {
+    refreshToken(refreshTokenValue).then(({data}) => {
+      const {access_token, refresh_token, expires_in} = data;
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: {access_token, refresh_token, expires_in},
+      });
+    });
+  };
+};
+
+export {retrieveOAuthToken, refreshTokenAction};

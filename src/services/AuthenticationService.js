@@ -15,7 +15,7 @@ const handleOAuthRedirector = redirectorCode => {
   const codeFromRedirect = redirectorCode
     .split('code=')[1]
     .replace('&origin=external', '');
-  const tokenResponsePromise = axios.post(
+  return axios.post(
     `${OPEN_HUMANS_BASE}oauth2/token/`,
     {
       grant_type: 'authorization_code',
@@ -33,8 +33,6 @@ const handleOAuthRedirector = redirectorCode => {
       },
     },
   );
-
-  return tokenResponsePromise;
 };
 
 const refreshToken = refresh_token => {

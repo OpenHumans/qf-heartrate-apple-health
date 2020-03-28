@@ -1,6 +1,8 @@
+import {AUTHENTICATION_ERROR, LOGIN_SUCCESS} from '../actions/actionTypes';
+
 const AuthenticationReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'LOGIN_SUCCESS':
+    case LOGIN_SUCCESS:
       const {access_token, refresh_token, expires_in} = action.payload;
       const now = new Date();
       return {
@@ -10,6 +12,9 @@ const AuthenticationReducer = (state = {}, action) => {
         expires_in,
         login_date: now.getTime(),
       };
+    case AUTHENTICATION_ERROR: {
+      return {};
+    }
     default:
       return state;
   }
