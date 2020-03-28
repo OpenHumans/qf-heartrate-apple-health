@@ -3,29 +3,17 @@ import ReduxThunk from 'redux-thunk';
 import AuthenticationReducer from './reducers/AuthenticationReducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import HealthKitReducer from './reducers/HealtKitReducer';
-
 import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
+import Store from './store';
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
+  AsyncStorage,
 };
 
-const persistedReducer = persistReducer(
-  persistConfig,
-  combineReducers({
-    AuthenticationReducer,
-    HealthKitReducer,
-  }),
-);
-
-const store = createStore(
-  persistedReducer,
-  {},
-  composeWithDevTools(applyMiddleware(ReduxThunk)),
-);
+const persistedReducer = persistReducer(persistConfig, {});
 
 export default () => {
-  const persistor = persistStore(store);
-  return {store, persistor};
+  const persistor = persistStore(Store);
+  return {Store, persistor};
 };

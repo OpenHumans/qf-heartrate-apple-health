@@ -10,10 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-navigation/native": "^5.1.1",
     "@react-navigation/stack": "^5.2.3",
-    "axios": "^0.19.2",
+    "axios": "^0.18.0",
+    "base-64": "^0.1.0",
     "moment": "^2.24.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
@@ -25,6 +27,7 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "rn-apple-healthkit": "^0.8.0"
   },

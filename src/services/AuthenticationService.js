@@ -37,4 +37,26 @@ const handleOAuthRedirector = redirectorCode => {
   return tokenResponsePromise;
 };
 
-export {handleOAuthRedirector};
+const refreshToken = refresh_token => {
+  const tokenResponsePromise = axios.post(
+    `${OPEN_HUMANS_BASE}oauth2/token/`,
+    {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+    },
+    {
+      transformRequest: jsonData => transformRequest(jsonData),
+      auth: {
+        username: CLIENT_ID,
+        password: CLIENT_SECRET,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  );
+
+  return tokenResponsePromise;
+};
+
+export {handleOAuthRedirector, refreshToken};

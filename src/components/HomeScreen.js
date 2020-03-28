@@ -36,8 +36,8 @@ const HomeScreen = ({access_token, navigation}) => {
 };
 
 const mapStateToProps = state => {
-  const {access_token} = state.AuthenticationReducer;
-  return {access_token};
+  const {access_token, refresh_token} = state.AuthenticationReducer;
+  return {access_token, refresh_token};
 };
 
 export default connect(
