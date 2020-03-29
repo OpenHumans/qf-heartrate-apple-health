@@ -8,6 +8,17 @@ const writeFile = (filePath, jsonToWrite) => {
   return RNFS.writeFile(filePath, JSON.stringify(jsonToWrite), 'utf8');
 };
 
+const deleteOldFiles = (accessToken) => {
+  const deleteUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/delete/?access_token=${accessToken}`;
+  return axios({
+    method: 'post',
+    url: deleteUrl,
+    data: {
+      all_files: true
+    },
+  });
+};
+
 const createUploadResource = (accessToken, filename) => {
   const uploadUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/upload/direct/?access_token=${accessToken}`;
   return axios({
@@ -73,6 +84,7 @@ const uploadData = async (accessToken, heartData) => {
     const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
     try {
       await writeFile(filePath, heartData);
+      await deleteOldFiles(accessToken);
       const {data} = await createUploadResource(accessToken, filename);
 
       await doMultipartUpload(
