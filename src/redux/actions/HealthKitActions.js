@@ -1,6 +1,7 @@
 import {
   initHealthKit,
   getHeartRateSamples,
+  getRestingHeartRate,
 } from '../../services/HealthKitService';
 import {uploadData} from '../../services/OpenHumansService';
 import {
@@ -38,12 +39,20 @@ const GetHeartRateInfo = access_token => {
     });
     try {
       const samples = await getHeartRateSamples();
+      const rest_samples = await getRestingHeartRate();
       dispatch({
         type: HEART_RATE_SAMPLES_GET_SUCCESS,
-        payload: samples,
+        payload: {
+          'heart_rate': samples,
+          'resting_heart_rate': rest_samples
+        }
       });
 
-      await uploadData(access_token, samples);
+      await uploadData(access_token,
+        {
+          'heart_rate': samples,
+          'resting_heart_rate': rest_samples
+        });
 
       dispatch({
         type: HEART_RATE_SAMPLES_UPLOAD_SUCCESS,

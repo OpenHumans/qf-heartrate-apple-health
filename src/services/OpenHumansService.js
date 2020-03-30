@@ -80,7 +80,7 @@ const closeUploadREsource = (accessToken, id) => {
 const uploadData = async (accessToken, heartData) => {
   return new Promise(async (resolve, reject) => {
     // WRITE THE FILE
-    const filename = `${FILENAME_PREFIX}${new Date().getTime()}.txt`;
+    const filename = `${FILENAME_PREFIX}${new Date().getTime()}.json`;
     const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
     try {
       await writeFile(filePath, heartData);
