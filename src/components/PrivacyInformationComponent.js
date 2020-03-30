@@ -53,7 +53,7 @@ const PrivacyInformationComponent = () => {
                 }}>
                 data use policy
               </Text>
-                .
+            .
         </Text>
       </View>
     </SafeAreaView>

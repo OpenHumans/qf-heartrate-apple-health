@@ -2,7 +2,7 @@ import {
   handleOAuthRedirector,
   refreshToken,
 } from '../../services/AuthenticationService';
-import {LOADER_STOP, LOGIN_SUCCESS} from './actionTypes';
+import {AUTHENTICATION_ERROR, LOADER_STOP, LOGIN_SUCCESS} from './actionTypes';
 
 const retrieveOAuthToken = code => {
   return dispatch => {
@@ -20,14 +20,20 @@ const retrieveOAuthToken = code => {
 };
 
 const refreshTokenAction = refreshTokenValue => {
-  return dispatch => {
-    refreshToken(refreshTokenValue).then(({data}) => {
+  return async dispatch => {
+    try {
+      const {data} = await refreshToken(refreshTokenValue);
+
       const {access_token, refresh_token, expires_in} = data;
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {access_token, refresh_token, expires_in},
       });
-    });
+    } catch (error) {
+      dispatch({
+        type: AUTHENTICATION_ERROR,
+      });
+    }
   };
 };
 
