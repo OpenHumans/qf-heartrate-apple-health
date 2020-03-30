@@ -28,7 +28,7 @@ const HomeScreen = ({access_token, navigation}) => {
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('PrivacyPolicy');
+              navigation.navigate('Privacy Policy');
             }}>
             <Text style={{color: '#FFF'}}>Privacy policy</Text>
           </TouchableOpacity>

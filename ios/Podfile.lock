@@ -19,7 +19,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - RCTAppleHealthKit (0.8.0):
+  - RCTAppleHealthKit (0.0.2):
     - React
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
@@ -241,7 +241,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - RCTAppleHealthKit (from `../node_modules/rn-apple-healthkit`)
+  - "RCTAppleHealthKit (from `../node_modules/@gedankenstuecke/rn-apple-healthkit`)"
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -289,7 +289,7 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   RCTAppleHealthKit:
-    :path: "../node_modules/rn-apple-healthkit"
+    :path: "../node_modules/@gedankenstuecke/rn-apple-healthkit"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -352,7 +352,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  RCTAppleHealthKit: bbb19a33c922d0c36631cd571680eed68e78c63a
+  RCTAppleHealthKit: 4187b8255d63f13078c598916da344c3678882bb
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -381,6 +381,6 @@ SPEC CHECKSUMS:
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 44f575c09f415dcf90ec4b4aa21342482acc875f
+PODFILE CHECKSUM: bacb557caa73874b7e6d90f787faa0ea43928f6a
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.9.1
