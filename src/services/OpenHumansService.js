@@ -19,6 +19,12 @@ const deleteOldFiles = (accessToken) => {
   });
 };
 
+const putToS3 = (url, data) => {
+  return axios.put(url, JSON.stringify(data), {headers: {
+          'Content-Type': '',}
+        });
+};
+
 const createUploadResource = (accessToken, filename) => {
   const uploadUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/upload/direct/?access_token=${accessToken}`;
   return axios({
@@ -32,36 +38,6 @@ const createUploadResource = (accessToken, filename) => {
       }),
     },
   });
-};
-
-const doMultipartUpload = (files, url, id) => {
-  const uploadBegin = response => {
-    const jobId = response.jobId;
-    console.log('UPLOAD HAS BEGUN! JobId: ' + jobId);
-  };
-
-  const uploadProgress = response => {
-    const percentage = Math.floor(
-      (response.totalBytesSent / response.totalBytesExpectedToSend) * 100,
-    );
-    console.log('UPLOAD IS ' + percentage + '% DONE!');
-  };
-
-  // upload files
-  return RNFS.uploadFiles({
-    toUrl: url,
-    binaryStreamOnly: true,
-    files: files,
-    headers: {
-      'Content-Type': '',
-    },
-    method: 'PUT',
-    fields: {
-      file_id: id,
-    },
-    begin: uploadBegin,
-    progress: uploadProgress,
-  }).promise;
 };
 
 const closeUploadREsource = (accessToken, id) => {
@@ -86,17 +62,17 @@ const uploadData = async (accessToken, heartData) => {
       await writeFile(filePath, heartData);
       await deleteOldFiles(accessToken);
       const {data} = await createUploadResource(accessToken, filename);
-
-      await doMultipartUpload(
-        [
-          {
-            filename: filename,
-            filepath: filePath,
-          },
-        ],
-        data.url,
-        data.id,
-      );
+      await putToS3(data.url, heartData)
+//      await doMultipartUpload(
+//        [
+//          {
+//            filename: filename,
+//            filepath: filePath,
+//          },
+//        ],
+//        data.url,
+//        data.id,
+//      );
       await closeUploadREsource(accessToken, data.id);
       resolve();
     } catch ({response}) {
