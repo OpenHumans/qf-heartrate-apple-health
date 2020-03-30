@@ -59,7 +59,7 @@ const uploadData = async (accessToken, heartData) => {
     const filename = `${FILENAME_PREFIX}${new Date().getTime()}.json`;
     const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
     try {
-      await writeFile(filePath, heartData);
+      // await writeFile(filePath, heartData);
       await deleteOldFiles(accessToken);
       const {data} = await createUploadResource(accessToken, filename);
       await putToS3(data.url, heartData)
