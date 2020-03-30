@@ -41,7 +41,7 @@ const App: () => React$Node = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="PrivacyPolicy"
+              name="Privacy Policy"
               component={PrivacyInformationComponent}
               options={{
                 headerTintColor: '#fff',

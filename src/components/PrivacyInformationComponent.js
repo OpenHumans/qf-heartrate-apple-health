@@ -19,7 +19,13 @@ const PrivacyInformationComponent = () => {
           padding: 15,
         }}>
         <Text style={{fontSize: 16, color: '#FFF'}}>
-          {I18N.PRIVACY_POLICY_TEXT}
+        This application is designed to allow you to upload your heart rate and resting heart rate data
+        from your local <Text style={{fontStyle: 'italic'}}>Apple Health</Text> store on your phone
+        to the <Text style={{fontStyle: 'italic'}}>Open Humans</Text> platform.
+        {"\n\n"}
+        The platform is run by the 501(c)(3), non-profit <Text style={{fontStyle: 'italic'}}>Open
+        Humans Foundation</Text>.
+        You can read their full terms of service for <Text style={{fontStyle: 'italic'}}>Open Humans</Text>{" "}
           <Text
             style={{
               fontWeight: 'bold',
@@ -33,6 +39,21 @@ const PrivacyInformationComponent = () => {
             here
           </Text>
             .
+            {'\n'}{'\n'}
+            Learn more about the <Text style={{fontStyle: 'italic'}}>Open Humans</Text>{' '}
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textDecorationLine: 'underline',
+                }}
+                onPress={() => {
+                  Linking.openURL('https://www.openhumans.org/data-use/').catch(err =>
+                    console.error('An error occurred', err),
+                  );
+                }}>
+                data use policy
+              </Text>
+                .
         </Text>
       </View>
     </SafeAreaView>
