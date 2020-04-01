@@ -24,11 +24,11 @@ const buildCSV = jsonData => {
   let csv = '';
   heart_rate.forEach(item => {
     const itemDate = new Date(item.startDate);
-    csv += `${item.value},${itemDate.getTime()},H;`;
+    csv += `${item.value},${item.startDate},H\n`;
   });
   resting_heart_rate.forEach(item => {
     const itemDate = new Date(item.startDate);
-    csv += `${item.value},${itemDate.getTime()},R;`;
+    csv += `${item.value},${item.startDate},R\n`;
   });
 
   return csv;
@@ -73,7 +73,7 @@ const closeUploadREsource = (accessToken, id) => {
 const uploadData = async (accessToken, heartData) => {
   return new Promise(async (resolve, reject) => {
     // WRITE THE FILE
-    const filename = `${FILENAME_PREFIX}${new Date().getTime()}.json`;
+    const filename = `${FILENAME_PREFIX}${new Date().getTime()}.csv`;
     const filePath = `${RNFS.DocumentDirectoryPath}/${filename}`;
     try {
       // await writeFile(filePath, heartData);

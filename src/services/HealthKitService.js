@@ -22,7 +22,7 @@ const initHealthKit = () => {
 const getHeartRateSamples = () => {
   let options = {
     unit: 'bpm', // optional; default 'bpm'
-    startDate: new Date(2016, 4, 27).toISOString(), // required
+    startDate: new Date(2015, 4, 1).toISOString(), // required
     endDate: new Date().toISOString(), // optional; default now
     ascending: false, // optional; default false
     // limit: 10, // optional; default no limit
@@ -32,7 +32,6 @@ const getHeartRateSamples = () => {
       if (err) {
         reject(err);
       }
-      console.log(results);
       const hd = results.map(result => {
         const {value, startDate} = result;
         return {
@@ -50,7 +49,7 @@ const getHeartRateSamples = () => {
 const getRestingHeartRate = () => {
   let options = {
     unit: 'bpm', // optional; default 'bpm'
-    startDate: new Date(2016, 4, 27).toISOString(), // required
+    startDate: new Date(2015, 4, 1).toISOString(), // required
     endDate: new Date().toISOString(), // optional; default now
     ascending: false, // optional; default false
     // limit: 10, // optional; default no limit
@@ -60,7 +59,6 @@ const getRestingHeartRate = () => {
       if (err) {
         reject(err);
       }
-      console.log(results);
       const hd = results.map(result => {
         const {value, startDate} = result;
         return {
