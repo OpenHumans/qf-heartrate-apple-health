@@ -8,21 +8,38 @@ const writeFile = (filePath, jsonToWrite) => {
   return RNFS.writeFile(filePath, JSON.stringify(jsonToWrite), 'utf8');
 };
 
-const deleteOldFiles = (accessToken) => {
+const deleteOldFiles = accessToken => {
   const deleteUrl = `${OPEN_HUMANS_BASE}api/direct-sharing/project/files/delete/?access_token=${accessToken}`;
   return axios({
     method: 'post',
     url: deleteUrl,
     data: {
-      all_files: true
+      all_files: true,
     },
   });
 };
 
+const buildCSV = jsonData => {
+  const {heart_rate, resting_heart_rate} = jsonData;
+  let csv = '';
+  heart_rate.forEach(item => {
+    const itemDate = new Date(item.startDate);
+    csv += `${item.value},${itemDate.getTime()},H;`;
+  });
+  resting_heart_rate.forEach(item => {
+    const itemDate = new Date(item.startDate);
+    csv += `${item.value},${itemDate.getTime()},R;`;
+  });
+
+  return csv;
+};
+
 const putToS3 = (url, data) => {
-  return axios.put(url, JSON.stringify(data), {headers: {
-          'Content-Type': '',}
-        });
+  return axios.put(url, buildCSV(data), {
+    headers: {
+      'Content-Type': '',
+    },
+  });
 };
 
 const createUploadResource = (accessToken, filename) => {
@@ -62,17 +79,17 @@ const uploadData = async (accessToken, heartData) => {
       // await writeFile(filePath, heartData);
       await deleteOldFiles(accessToken);
       const {data} = await createUploadResource(accessToken, filename);
-      await putToS3(data.url, heartData)
-//      await doMultipartUpload(
-//        [
-//          {
-//            filename: filename,
-//            filepath: filePath,
-//          },
-//        ],
-//        data.url,
-//        data.id,
-//      );
+      await putToS3(data.url, heartData);
+      //      await doMultipartUpload(
+      //        [
+      //          {
+      //            filename: filename,
+      //            filepath: filePath,
+      //          },
+      //        ],
+      //        data.url,
+      //        data.id,
+      //      );
       await closeUploadREsource(accessToken, data.id);
       resolve();
     } catch ({response}) {
