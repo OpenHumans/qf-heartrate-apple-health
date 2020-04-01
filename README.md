@@ -40,3 +40,7 @@ The bulk of the work for this app has been done by [Lukasz Baldy](https://www.li
 who was kind enough to volunteer an extraordinary amount of time as part of his on-going efforts with the [Open COVID-19 initiative](https://app.jogl.io/program/opencovid19).
 
 Minor contributions were done by [Bastian Greshake Tzovaras](https://github.com/gedankenstuecke).
+
+### Contributing
+
+Check out our issues if there's open things. Also always get in touch via the #quantifiedflu channel in the Open Humans slack at https://slackin.openhumans.org
