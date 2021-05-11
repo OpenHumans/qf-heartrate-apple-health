@@ -715,6 +715,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@gedankenstuecke/rn-apple-healthkit@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@gedankenstuecke/rn-apple-healthkit/-/rn-apple-healthkit-0.0.2.tgz#ded569e9a2601156d914fe3afdd6d039c51e88ae"
+  integrity sha512-DJ4DuOUXVqn8WY1h7fWipiDC9QYXqV6QL0UzM/MRZ69XISh1iMbLFWR3WGoScfJFAhpf7enPBtCC1c9ifrp+Gw==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -4430,9 +4435,9 @@ lodash.unescape@4.0.1:
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
 lodash@^4.17.10, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5, lodash@^4.3.0:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -6003,11 +6008,6 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
-
-rn-apple-healthkit@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/rn-apple-healthkit/-/rn-apple-healthkit-0.8.0.tgz#83a23e71fc54d6d929cd6a55d5c590072bab4c64"
-  integrity sha512-LymIWk9lwIkcGIACveCxvp2jKXTTrDbdUYgcac+wuaSLPPpLfZqrQ0fz+QACYx5cSwAn6Uj6NcJ5+QkwPjY+5g==
 
 rsvp@^4.8.4:
   version "4.8.5"
