@@ -715,6 +715,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@gedankenstuecke/rn-apple-healthkit@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@gedankenstuecke/rn-apple-healthkit/-/rn-apple-healthkit-0.0.2.tgz#ded569e9a2601156d914fe3afdd6d039c51e88ae"
+  integrity sha512-DJ4DuOUXVqn8WY1h7fWipiDC9QYXqV6QL0UzM/MRZ69XISh1iMbLFWR3WGoScfJFAhpf7enPBtCC1c9ifrp+Gw==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -3274,9 +3279,9 @@ hoist-non-react-statics@^3.3.0:
     react-is "^16.7.0"
 
 hosted-git-info@^2.1.4:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
-  integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
+  integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
@@ -6003,11 +6008,6 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
-
-rn-apple-healthkit@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/rn-apple-healthkit/-/rn-apple-healthkit-0.8.0.tgz#83a23e71fc54d6d929cd6a55d5c590072bab4c64"
-  integrity sha512-LymIWk9lwIkcGIACveCxvp2jKXTTrDbdUYgcac+wuaSLPPpLfZqrQ0fz+QACYx5cSwAn6Uj6NcJ5+QkwPjY+5g==
 
 rsvp@^4.8.4:
   version "4.8.5"
